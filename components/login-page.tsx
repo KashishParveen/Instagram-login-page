@@ -30,6 +30,28 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-[#000000] transition-colors duration-300">
+      {/* Top Header - Mobile/Tablet Only */}
+      <header className="lg:hidden w-full border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-[#000000] py-4 px-4">
+        <div className="flex items-center justify-between max-w-md mx-auto">
+          {/* Instagram Logo */}
+          <div className="flex-1 flex justify-center">
+            <InstagramLogo />
+          </div>
+          
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="group relative p-2 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Toggle theme"
+          >
+            <div className="relative w-5 h-5">
+              <Sun className="absolute inset-0 w-5 h-5 text-amber-500 transition-all duration-300 rotate-0 scale-100 dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute inset-0 w-5 h-5 text-blue-400 transition-all duration-300 rotate-90 scale-0 dark:rotate-0 dark:scale-100" />
+            </div>
+          </button>
+        </div>
+      </header>
+
       {/* Main content area */}
       <div className="flex flex-col lg:flex-row flex-1">
         {/* Left side - Carousel (hidden on mobile and tablet, shown on large screens) */}
@@ -39,8 +61,8 @@ export default function LoginPage() {
 
         {/* Right side - Login form section */}
         <div className="w-full lg:w-[40%] flex flex-col px-4 py-6 sm:px-6 sm:py-8 bg-white dark:bg-[#000000]">
-          {/* Theme Toggle - Top Right */}
-          <div className="flex justify-end mb-6">
+          {/* Theme Toggle - Desktop Only (Top Right) */}
+          <div className="hidden lg:flex justify-end mb-6">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="group relative p-2.5 rounded-full bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all duration-300 hover:scale-110 active:scale-95"
@@ -60,8 +82,8 @@ export default function LoginPage() {
 
               {/* Main form box */}
               <div className="border border-gray-200 dark:border-zinc-800 rounded-lg p-8 sm:p-10 bg-white dark:bg-zinc-900/50 backdrop-blur-sm shadow-sm dark:shadow-zinc-900/50">
-                {/* Instagram Logo */}
-                <div className="mb-8 sm:mb-10 flex justify-center">
+                {/* Instagram Logo - Desktop Only */}
+                <div className="hidden lg:flex mb-8 sm:mb-10 justify-center">
                   <InstagramLogo />
                 </div>
 
