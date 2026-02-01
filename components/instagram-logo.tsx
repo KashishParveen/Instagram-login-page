@@ -15,7 +15,7 @@ export default function InstagramLogo() {
           fontSize="36"
           fontFamily="Georgia, 'Segoe UI', serif"
           fontStyle="italic"
-          fill="black"
+          className="fill-black dark:fill-white"
           letterSpacing="-1.5"
         >
           Instagram

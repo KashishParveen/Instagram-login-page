@@ -1,163 +1,171 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import InstagramLogo from './instagram-logo'
+import { useState, useEffect } from 'react'
 
 export default function Carousel() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoplay, setIsAutoplay] = useState(true)
+  const [activeImage, setActiveImage] = useState(0)
+  const [fadeState, setFadeState] = useState('visible')
 
-  const slides = [
+  const images = [
     {
       id: 1,
-      gradient: 'from-fuchsia-600 via-purple-600 to-blue-600',
-      bgColor: 'bg-gradient-to-br from-fuchsia-50 to-purple-50',
-      title: 'See every moment',
-      subtitle: 'Share photos and videos with the people you love.',
-      icon: '📸',
-      animationDelay: 0,
+      emoji: '📸',
+      color: 'from-purple-400 to-pink-500'
     },
     {
       id: 2,
-      gradient: 'from-blue-600 via-cyan-600 to-green-600',
-      bgColor: 'bg-gradient-to-br from-blue-50 to-cyan-50',
-      title: 'Connect with everyone',
-      subtitle: 'Connect with friends and discover new interests with Reels, Stories, and more.',
-      icon: '🌐',
-      animationDelay: 1,
+      emoji: '🎨',
+      color: 'from-blue-400 to-cyan-500'
     },
     {
       id: 3,
-      gradient: 'from-orange-600 via-pink-600 to-red-600',
-      bgColor: 'bg-gradient-to-br from-orange-50 to-pink-50',
-      title: 'Express yourself',
-      subtitle: 'Write captions, share your thoughts, and show off your personality.',
-      icon: '✨',
-      animationDelay: 2,
+      emoji: '🌟',
+      color: 'from-orange-400 to-pink-500'
     },
     {
       id: 4,
-      gradient: 'from-green-600 via-teal-600 to-blue-600',
-      bgColor: 'bg-gradient-to-br from-green-50 to-teal-50',
-      title: 'Grow your community',
-      subtitle: 'Build meaningful connections and inspire others with your creativity.',
-      icon: '💫',
-      animationDelay: 3,
-    },
+      emoji: '💫',
+      color: 'from-green-400 to-teal-500'
+    }
   ]
 
   useEffect(() => {
-    if (!isAutoplay) return
-
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 6000)
+      setFadeState('fading')
+      setTimeout(() => {
+        setActiveImage((prev) => (prev + 1) % images.length)
+        setFadeState('visible')
+      }, 500)
+    }, 4000)
+    
     return () => clearInterval(interval)
-  }, [isAutoplay, slides.length])
-
-  const handleSlideChange = useCallback((index) => {
-    setCurrentSlide(index)
-    setIsAutoplay(false)
-    setTimeout(() => setIsAutoplay(true), 8000)
-  }, [])
-
-  const currentSlideData = slides[currentSlide]
+  }, [images.length])
 
   return (
-    <div className="relative w-full h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 flex flex-col overflow-hidden">
-      {/* Animated Background Gradient */}
-      <div className="absolute inset-0 z-0">
-        <div className={`absolute inset-0 bg-gradient-to-br ${currentSlideData.gradient} opacity-0 dark:opacity-0 transition-opacity duration-1000`} />
+    <div className="relative w-full h-full flex items-center justify-center bg-white dark:bg-[#000000]">
+      {/* Instagram Logo - Top Left */}
+      <div className="absolute top-8 left-12 z-20">
+        <svg className="w-32 h-12" viewBox="0 0 448 512" fill="url(#instagram-gradient)">
+          <defs>
+            <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{ stopColor: '#f09433' }} />
+              <stop offset="25%" style={{ stopColor: '#e6683c' }} />
+              <stop offset="50%" style={{ stopColor: '#dc2743' }} />
+              <stop offset="75%" style={{ stopColor: '#cc2366' }} />
+              <stop offset="100%" style={{ stopColor: '#bc1888' }} />
+            </linearGradient>
+          </defs>
+          <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+        </svg>
       </div>
 
-      {/* Instagram Logo */}
-      <div className="absolute top-6 lg:top-8 left-6 lg:left-8 z-30">
-        <div className="scale-50 lg:scale-75 origin-top-left">
-          <InstagramLogo />
-        </div>
-      </div>
+      {/* Main Content */}
+      <div className="flex flex-col items-center justify-center max-w-2xl px-12">
+        {/* Heading */}
+        <h1 className="text-5xl font-normal text-white dark:text-white mb-8 text-center leading-tight">
+          See everyday moments from your
+        </h1>
+        <h2 className="text-5xl font-normal mb-16 text-center">
+          <span className="bg-gradient-to-r from-orange-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+            close friends
+          </span>
+          <span className="text-white dark:text-white">.</span>
+        </h2>
 
-      {/* Main Carousel Container */}
-      <div className="flex-1 relative overflow-hidden flex items-center justify-center">
-        {/* Carousel Slides */}
-        {slides.map((slide, index) => {
-          const isActive = index === currentSlide
-          const isPrev = index === (currentSlide - 1 + slides.length) % slides.length
-          const isNext = index === (currentSlide + 1) % slides.length
+        {/* Animated Photo Collage */}
+        <div className="relative w-96 h-96">
+          {/* Background glow effect */}
+          <div className="absolute inset-0 blur-3xl opacity-30">
+            <div className={`w-full h-full bg-gradient-to-br ${images[activeImage].color} transition-all duration-1000`}></div>
+          </div>
 
-          return (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-all duration-1000 ease-out flex items-center justify-center px-8 ${
-                isActive ? 'opacity-100 scale-100 z-20' : isPrev ? 'opacity-0 scale-95 -translate-x-full z-10' : isNext ? 'opacity-0 scale-95 translate-x-full z-10' : 'opacity-0 scale-90 z-0'
-              }`}
+          {/* Main photo stack */}
+          <div className="relative w-full h-full">
+            {/* Back card - slightly rotated left */}
+            <div 
+              className="absolute top-4 left-8 w-64 h-80 rounded-2xl shadow-2xl transform -rotate-12 transition-all duration-700"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              }}
             >
-              {/* Content Container */}
-              <div className="max-w-lg text-center relative z-10">
-                {/* Icon Animation */}
-                <div className="mb-6 lg:mb-8">
-                  <div className={`inline-flex items-center justify-center w-16 lg:w-20 h-16 lg:h-20 rounded-full ${slide.bgColor} dark:bg-gradient-to-br dark:from-zinc-800 dark:to-zinc-700 shadow-lg animate-bounce`} style={{ animationDelay: '0.1s' }}>
-                    <span className="text-4xl lg:text-5xl">{slide.icon}</span>
-                  </div>
-                </div>
+              <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
+            </div>
 
-                {/* Title */}
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-3 lg:mb-4 leading-tight">
-                  {slide.title}
-                </h1>
-
-                {/* Subtitle */}
-                <p className="text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6 lg:mb-8">
-                  {slide.subtitle}
-                </p>
-
-                {/* Decorative Elements */}
-                <div className="flex justify-center gap-4 mb-8">
-                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500 opacity-60" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 opacity-60" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 opacity-60" />
-                </div>
+            {/* Middle card - center */}
+            <div 
+              className="absolute top-8 left-16 w-64 h-80 rounded-2xl shadow-2xl transform transition-all duration-700"
+              style={{
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+              }}
+            >
+              <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
+              
+              {/* Reaction emoji overlays */}
+              <div className="absolute -top-3 left-4 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center text-2xl animate-bounce">
+                😊
               </div>
-
-              {/* Floating Shapes Background */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className={`absolute top-1/4 -left-12 w-32 h-32 rounded-full blur-3xl opacity-30 ${slide.bgColor}`} />
-                <div className={`absolute bottom-1/4 -right-12 w-40 h-40 rounded-full blur-3xl opacity-20 ${slide.bgColor}`} />
+              <div className="absolute top-1/4 -right-3 w-10 h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center text-xl">
+                🌟
               </div>
             </div>
-          )
-        })}
-      </div>
 
-      {/* Slide Indicators - Modern Design */}
-      <div className="absolute bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex gap-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleSlideChange(index)}
-            className={`transition-all duration-300 rounded-full ${
-              index === currentSlide
-                ? 'bg-gradient-to-r from-fuchsia-500 to-purple-500 w-8 h-2.5 shadow-lg hover:shadow-xl'
-                : 'bg-white/40 w-2.5 h-2.5 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === currentSlide}
-          />
-        ))}
-      </div>
+            {/* Front card - slightly rotated right with transition */}
+            <div 
+              className={`absolute top-12 left-24 w-64 h-80 rounded-2xl shadow-2xl transform rotate-6 transition-all duration-500 ${
+                fadeState === 'fading' ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+              }`}
+              style={{
+                background: `linear-gradient(135deg, ${
+                  activeImage === 0 ? '#667eea, #764ba2' :
+                  activeImage === 1 ? '#4facfe, #00f2fe' :
+                  activeImage === 2 ? '#fa709a, #fee140' :
+                  '#30cfd0, #330867'
+                })`,
+              }}
+            >
+              <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+              
+              {/* Image content placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-7xl animate-pulse">{images[activeImage].emoji}</div>
+              </div>
 
-      {/* Counter */}
-      <div className="absolute top-1/2 right-6 lg:right-8 transform -translate-y-1/2 z-30 text-center">
-        <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-          <span className="text-gray-900 dark:text-white font-bold">{currentSlide + 1}</span>
-          <span className="mx-1">/</span>
-          <span>{slides.length}</span>
-        </p>
-      </div>
+              {/* Instagram post UI elements */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent rounded-b-2xl">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="flex gap-2">
+                    <div className="w-8 h-1 bg-white/80 rounded-full"></div>
+                    <div className="w-8 h-1 bg-white/40 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 border-2 border-white rounded-full"></div>
+                  <div className="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-      {/* Navigation Hints */}
-      <div className="absolute bottom-3 lg:bottom-4 right-6 lg:right-8 z-30 text-xs text-gray-500 dark:text-gray-400 font-medium">
-        Click indicators to explore
+              {/* Reaction bubbles */}
+              <div className="absolute bottom-24 -right-4 w-12 h-12 bg-gradient-to-br from-pink-500 to-red-500 rounded-full shadow-lg flex items-center justify-center text-2xl animate-pulse">
+                ❤️
+              </div>
+              <div className="absolute top-20 -left-4 w-10 h-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center text-xl">
+                ✅
+              </div>
+            </div>
+          </div>
+
+          {/* Floating stickers */}
+          <div className="absolute top-0 right-12 w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg flex items-center justify-center text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>
+            🍕
+          </div>
+          <div className="absolute bottom-12 left-4 w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full shadow-lg flex items-center justify-center text-xl animate-bounce" style={{ animationDelay: '1s' }}>
+            🎮
+          </div>
+        </div>
       </div>
     </div>
   )
