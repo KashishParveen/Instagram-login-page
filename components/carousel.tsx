@@ -62,14 +62,14 @@ export default function Carousel() {
       {/* Main Content */}
       <div className="flex flex-col items-center justify-center max-w-2xl px-12">
         {/* Heading */}
-        <h1 className="text-5xl font-normal text-white dark:text-white mb-8 text-center leading-tight">
+        <h1 className="text-5xl font-normal text-gray-900 dark:text-white mb-8 text-center leading-tight">
           See everyday moments from your
         </h1>
         <h2 className="text-5xl font-normal mb-16 text-center">
           <span className="bg-gradient-to-r from-orange-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
             close friends
           </span>
-          <span className="text-white dark:text-white">.</span>
+          <span className="text-gray-900 dark:text-white">.</span>
         </h2>
 
         {/* Animated Photo Collage */}
