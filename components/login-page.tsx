@@ -152,6 +152,7 @@ export default function LoginPage() {
             <a href="#" className="hover:underline">Terms</a>
             <a href="#" className="hover:underline">Locations</a>
             <a href="#" className="hover:underline">Instagram Lite</a>
+            <a href="#" className="hover:underline">Meta AI</a>
             <a href="#" className="hover:underline">Threads</a>
             <a href="#" className="hover:underline">Contact Uploading & Non-Users</a>
             <a href="#" className="hover:underline">Meta Verified</a>
