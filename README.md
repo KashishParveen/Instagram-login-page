@@ -154,4 +154,4 @@ Give a ⭐️ if you liked this project!
 
 ---
 
-<p align="center">Made with ❤️ by Kashish Parveen</p>
+<p align="center">Made by Kashish Parveen</p>
